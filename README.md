@@ -1,36 +1,160 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Done Deliveries / Sprint Panel
 
-## Getting Started
+**Done Deliveries / Sprint Panel** is a web application for managing projects and sprints. It streamlines collaboration between administrators, managers, and stakeholders by offering secure role-based access, intuitive sprint dashboards, and clear communication tools. The platform helps to stay organized and informed.
 
-First, run the development server:
+---
+
+## Tech Stack
+
+**Frontend**
+- Next.js
+- TypeScript
+- Tailwind CSS
+
+**Backend / Services**
+- Supabase
+- PostgreSQL (via Supabase)
+
+**Authentication & Security**
+- Supabase Auth with role-based access
+- Cookies-based session handling
+
+**Build & Deployment**
+- Node.js environment
+
+---
+
+## Installation & Setup
+
+Follow the steps below to run the project locally.
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/your-org/your-repo.git
+cd your-repo
+```
+
+### 2. Install dependencies
+
+```bash
+npm i
+```
+
+### 3. Configure environment variables
+
+Create a .env.local file in the project root and add your Supabase credentials:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
+
+### 4. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Key Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **User Accounts & Roles**  
+  Secure registration and login system.  
+  Admins, managers, and stakeholders each get a tailored view.
 
-## Learn More
+- **Project & Sprint Management**  
+  Organize projects into sprints.  
+  Navigate between past, current, and upcoming sprints and filter projects by release.
+  Search for projects by project name or client.
 
-To learn more about Next.js, take a look at the following resources:
+- **User Management**  
+  Administrators can manage user accounts and assign roles.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Legal & Compliance**  
+  Dedicated pages for the Privacy Policy and Terms of Use.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## API Overview
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The application uses a data access layer built on top of **Supabase**.  
+Below are the core API functions and their purpose.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### User & Role
+- `getUser` → returns the currently authenticated user
+- `getMyRole` → returns the numeric role ID of the logged-in user
+
+### Sprint Management
+- `getCurrentSprint` → fetches the current sprint for a given date
+- `getPrevSprint` → retrieves the sprint before the given one
+- `getNextSprint` → retrieves the sprint after the given one
+
+### Project & Cards
+- `getCardsForSprint` → Returns all project cards for the selected sprint with optional filters:
+  - `q` → search query
+  - `releaseOnly` → filter by release flag
+
+---
+
+## Screenshots
+
+Sneak peak into admin panel and it's functions
+
+#### Main view
+
+<p align="center">
+  <img src="public/screenshots/1.png" alt="Main" width="600"/>
+</p>
+
+#### Adding changelog/release
+
+<p align="center">
+  <img src="public/screenshots/2.png" alt="Changelog" width="600"/>
+</p>
+
+#### Projects filtered by release
+
+<p align="center">
+  <img src="public/screenshots/3.png" alt="Filter" width="600"/>
+</p>
+
+#### Editing project
+
+<p align="center">
+  <img src="public/screenshots/4.png" alt="Editing" width="600"/>
+</p>
+
+#### Role management
+
+<p align="center">
+  <img src="public/screenshots/5.png" alt="Roles" width="600"/>
+</p>
+
+## Project Roadmap
+
+Planned enhancements and upcoming features:
+
+### UI / UX
+- Dark mode / light mode toggle  
+- Intuitive project notes and comment system (stakeholder notes + developer feedback)  
+
+### User & Stakeholder Features
+- Dedicated stakeholder accounts with default filtering (stakeholders see only their own projects)  
+- Ability for stakeholders to leave feedback
+- Display assigned team members for each project with contact options (via email)
+
+### Admin & Permission Management
+- Extended user management (ban and delete accounts)  
+- Two-Factor Authentication (2FA)  
+
+### Communication & Notifications
+- Email notifications for stakeholders when a new release is published  
+
+### Data & File Management
+- Upload images/screenshots to changelogs  
+- Export project data to CSV  
+
+### Internationalization
+- Multi-language support (i18n)  
+
