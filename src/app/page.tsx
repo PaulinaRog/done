@@ -7,8 +7,9 @@ import SprintSearch from "./components/SprintSearch";
 import { redirect } from "next/navigation";
 import { getMyRole, getCardsForSprint, getCurrentSprint, getNextSprint, getPrevSprint, getSprintById, getUser } from "./data/api";
 import type { SprintSearchParams } from "./utils/Interface";
+import SuspenseWrapper from "./components/SuspenseWrapper";
 
-export default async function Page({ searchParams }: { searchParams: SprintSearchParams }) {
+export default async function Page({ searchParams }: { searchParams: Promise<SprintSearchParams> }) {
   const supabase = createServerComponentClient({ cookies });
 
   const user = await getUser(supabase);
@@ -55,7 +56,9 @@ export default async function Page({ searchParams }: { searchParams: SprintSearc
       <Header />
       <div className="mt-2 flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
         <SprintHeader start={sprint.start} end={sprint.end} prevId={prevS?.id} nextId={nextS?.id} q={q} only={releaseOnly} isCurrent={isCurrent} />
-        <SprintSearch initialQuery={q} initialOnly={releaseOnly} />
+        <SuspenseWrapper>
+          <SprintSearch initialQuery={q} initialOnly={releaseOnly} />
+        </SuspenseWrapper>
       </div>
       <section className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
         {cards.length === 0 ? (

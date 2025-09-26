@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/components/AuthProvider";
-import { Toast } from "../services/Toast";
 
 export default function NavbarUser(): React.ReactElement {
     const { user, signOut } = useAuth();

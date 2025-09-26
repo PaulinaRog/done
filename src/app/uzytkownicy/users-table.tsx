@@ -18,9 +18,10 @@ export default function UsersTable({ initial, canEdit }: UsersTableProps) {
             setRows((prev) => prev.map((r) => (r.user_id === user_id ? { ...r, role: nextRole } : r)));
             await updateUserRole(supabase, user_id, nextRole);
             Toast.fire({ icon: "success", title: "Zmieniono rolę" });
-        } catch (e: any) {
+        } catch (e: unknown) {
             setRows(initial);
-            ToastConf.fire({ icon: "error", title: "Błąd zmiany roli", text: e?.message || String(e) });
+            const msg = e instanceof Error ? e.message : String(e);
+            ToastConf.fire({ icon: "error", title: "Błąd zmiany roli", text: msg });
         } finally {
             setSavingId(null);
         }

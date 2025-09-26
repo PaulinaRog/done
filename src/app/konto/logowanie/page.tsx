@@ -16,7 +16,7 @@ export default function LoginPage(): React.ReactElement {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [modal, setModal] = useState<boolean>(false);
-  const [userId, setUserId] = useState<string>("");
+  const [_userId, setUserId] = useState<string>("");
 
   async function handleSignIn() {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });

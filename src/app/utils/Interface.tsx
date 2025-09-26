@@ -90,7 +90,7 @@ export interface Card {
         release: null | {
             version: string;
             date: IsoDateTime;
-            changelog: any[]
+            changelog: Array<ReleaseItem | string>;
         }
     };
     link: {
@@ -212,3 +212,7 @@ export interface SidebarProps {
 export interface LayoutProps {
     children: React.ReactNode;
 };
+
+export interface SuspenseWrapperProps {
+    children: React.ReactNode;
+}

@@ -7,7 +7,7 @@ import { fetchChangelogById, toggleRelease, updateReleaseDate, getMyRole } from 
 import { Toast, ToastConf } from "@/app/services/Toast";
 import ChangelogModal from "./ChangelogModal";
 import ReleaseDateModal from "./ReleaseDateModal";
-import type { ProjectCardProps } from "../utils/Interface";
+import type { ProjectCardProps, ChangelogRow } from "../utils/Interface";
 
 export default function ProjectCard({ project, sprintId, link, sprintStart, sprintEnd }: ProjectCardProps) {
     const supabase = createClientComponentClient();
@@ -15,13 +15,13 @@ export default function ProjectCard({ project, sprintId, link, sprintStart, spri
     const [canManage, setCanManage] = useState<boolean>(false);
     const [release, setRelease] = useState<boolean>(link.release);
     const [releaseDate, setReleaseDate] = useState<string | null>(link.release_date);
-    const [changelog, setChangelog] = useState<{ id: number; version: string; date: string; changelog: any[] } | null>(null);
+    const [changelog, setChangelog] = useState<ChangelogRow | null>(null);
     const [chgOpen, setChgOpen] = useState<boolean>(false);
     const [dateOpen, setDateOpen] = useState<boolean>(false);
 
     useEffect(() => {
         (async () => {
-            let role = await getMyRole(supabase);            
+            const role = await getMyRole(supabase);            
             if (role && (role === 2 || role === 3)){
             setCanManage(true);}
         })();
@@ -51,8 +51,9 @@ export default function ProjectCard({ project, sprintId, link, sprintStart, spri
             setReleaseDate(on ? new Date().toISOString() : null);
             if (!on) setChangelog(null);
             Toast.fire({ icon: "success", title: on ? "Release oznaczony" : "Release odznaczony" });
-        } catch (e: any) {
-            ToastConf.fire({ icon: "error", title: "Błąd zmiany release", text: e.message });
+        } catch (e: unknown) {
+            const msg = e instanceof Error ? e.message : String(e);
+            ToastConf.fire({ icon: "error", title: "Błąd zmiany release", text: msg });
         }
     }
 
@@ -108,11 +109,13 @@ export default function ProjectCard({ project, sprintId, link, sprintStart, spri
                 ) : (<div className="italic text-gray-500">W tym sprincie nie było releasu.</div>)}
             </div>
 
-            {release && changelog && changelog.changelog?.length > 0 && (
+            {release && changelog && Array.isArray(changelog.changelog) && changelog.changelog.length > 0 && (
                 <details className="mt-3">
                     <summary className="cursor-pointer text-sm text-acc-light">Pokaż changelog</summary>
                     <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-800">
-                        {changelog.changelog.map((item, i) => <li key={i}>{typeof item === "string" ? item : `${item.type.toUpperCase()} — ${item.description}`}</li>)}
+                        {changelog.changelog.map((item, i) => (
+                            <li key={i}>{typeof item === "string" ? item : item.description}</li>
+                        ))}
                     </ul>
                 </details>
             )}

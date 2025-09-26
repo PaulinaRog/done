@@ -23,7 +23,9 @@ export default function ChangelogModal({sprintId, projectId, changelogId, onClos
                 const chg = await fetchChangelogById(supabase, changelogId);
                 if (chg) {
                     if (versionRef.current) versionRef.current.value = chg.version ?? "";
-                    const lines = Array.isArray(chg.changelog) ? chg.changelog.map((x: any) => typeof x === "string" ? x : x?.description ?? JSON.stringify(x)): [];
+                    const lines = Array.isArray(chg.changelog)
+                        ? chg.changelog.map((x) => (typeof x === "string" ? x : x.description ?? JSON.stringify(x)))
+                        : [];
                     if (changesRef.current) changesRef.current.value = lines.join("\n");
                 }
             } finally {
@@ -55,8 +57,9 @@ export default function ChangelogModal({sprintId, projectId, changelogId, onClos
 
             onSaved(chg);
             onClose();
-        } catch (e: any) {
-            ToastConf.fire({ icon: "error", title: "Błąd zapisu changeloga", text: e.message });
+        } catch (e: unknown) {
+            const msg = e instanceof Error ? e.message : String(e);
+            ToastConf.fire({ icon: "error", title: "Błąd zapisu changeloga", text: msg });
         } finally {
             setSaving(false);
         }

@@ -2,22 +2,22 @@
 
 import Link from "next/link";
 import { SprintHeaderProps } from "../utils/Interface";
+import type { UrlObject } from "url";
 
 export default function SprintHeader({ start, end, prevId, nextId, q, only, isCurrent = true }: SprintHeaderProps) {
   
-  const hrefWithFilters = (id?: number | null) => {
-    if (!id) return "#";
-    const p = new URLSearchParams();
-    p.set("sprintId", String(id));
-    if (q?.trim()) p.set("q", q.trim());
-    if (only) p.set("only", "1");
-    return `/?${p.toString()}`;
+  const hrefWithFilters = (id?: number | null): UrlObject => {
+    if (!id) return { pathname: "#" };
+    const query: Record<string, string> = { sprintId: String(id) };
+    if (q?.trim()) query.q = q.trim();
+    if (only) query.only = "1";
+    return { pathname: "/", query };
   };
 
   return (
     <div role="group" className="mt-2 flex w-full max-w-full items-center gap-2 rounded-xl border border-secondary-light bg-white px-3 py-2 text-sm text-txt-light shadow-soft lg:max-w-[30vw]">
       <div className="shrink-0">
-        <Link aria-label="Poprzedni sprint" href={hrefWithFilters(prevId) as any} className={`rounded-md border-none px-2 py-1 ${prevId ? "hover:bg-secondary-light/60" : "pointer-events-none opacity-30"}`}>
+        <Link aria-label="Poprzedni sprint" href={hrefWithFilters(prevId)} className={`rounded-md border-none px-2 py-1 ${prevId ? "hover:bg-secondary-light/60" : "pointer-events-none opacity-30"}`}>
           <i className="fa-solid fa-chevron-left" />
         </Link>
       </div>
@@ -27,7 +27,7 @@ export default function SprintHeader({ start, end, prevId, nextId, q, only, isCu
         <span className="truncate">{formatDate(start)} — {formatDate(end)}</span>
       </div>
       <div className="shrink-0">
-        <Link aria-label="Następny sprint" href={hrefWithFilters(nextId) as any} className={`rounded-md border-none px-2 py-1 ${nextId ? "hover:bg-secondary-light/60" : "pointer-events-none opacity-30"}`}>
+        <Link aria-label="Następny sprint" href={hrefWithFilters(nextId)} className={`rounded-md border-none px-2 py-1 ${nextId ? "hover:bg-secondary-light/60" : "pointer-events-none opacity-30"}`}>
           <i className="fa-solid fa-chevron-right" />
         </Link>
       </div>

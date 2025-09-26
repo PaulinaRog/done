@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { SignProps } from "../utils/Interface";
 
 
-export default function Sign({ email, password, setEmail, setPassword, emailError = false, passError = false, }: SignProps): any {
+export default function Sign({ email, password, setEmail, setPassword, emailError = false, passError = false, }: SignProps): React.ReactElement {
   const [toggle, setToggle] = useState<boolean>(false);
 
   return (
