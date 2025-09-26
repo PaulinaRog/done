@@ -37,7 +37,7 @@ export default function Sidebar({ role }: SidebarProps) {
                 ))}
             </div>
 
-            <aside className="sticky top-0 mb-10 mt-6 hidden h-[80vh] w-64 shrink-0 overflow-y-auto rounded-2xl border bg-white shadow-soft lg:block">
+            <aside className="sticky top-24 hidden h-[70vh] w-64 shrink-0 overflow-y-auto rounded-2xl border bg-white shadow-soft lg:block">
                 <nav className="p-4">
                     <h3 className="mb-2 px-2 text-xs font-semibold uppercase tracking-wide text-txt-light/70">
                         Nawigacja
