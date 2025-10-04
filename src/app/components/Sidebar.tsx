@@ -22,7 +22,7 @@ export default function Sidebar({ role }: SidebarProps) {
 
     return (
         <>
-            <div className="max-w-full lg:hidden space-y-2 mt-2">
+            <div className="max-w-full lg:hidden space-y-2">
                 {items.map(i => (
                     <Link key={i.href} href={i.href}
                         className={["inline-flex max-w-full items-center gap-2 rounded-lg border px-3 py-3 mx-2 text-sm shadow-sm",
@@ -37,7 +37,7 @@ export default function Sidebar({ role }: SidebarProps) {
                 ))}
             </div>
 
-            <aside className="sticky top-24 hidden h-[70vh] w-64 shrink-0 overflow-y-auto rounded-2xl border bg-white shadow-soft lg:block">
+            <aside className="sticky top-0 hidden h-[70vh] w-64 shrink-0 overflow-y-auto rounded-2xl border bg-white shadow-soft lg:block">
                 <nav className="p-4">
                     <h3 className="mb-2 px-2 text-xs font-semibold uppercase tracking-wide text-txt-light/70">
                         Nawigacja

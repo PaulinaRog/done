@@ -45,9 +45,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     const canManage = useMemo(() => role === 2 || role === 3, [role]);
 
     return (
-        <div className="mx-auto md:flex max-w-7xl gap-6 px-4">
+        <div className="mx-auto md:flex max-w-7xl gap-6 px-4 lg:py-12 py-2">
             {!isAuthPage && role !== null && canManage && <Sidebar role={role} />}
-            <main className="flex-1 py-6">{children}</main>
+            <main className="flex-1">{children}</main>
         </div>
     );
 }

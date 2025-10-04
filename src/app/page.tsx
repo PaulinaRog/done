@@ -60,7 +60,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Spr
           <SprintSearch initialQuery={q} initialOnly={releaseOnly} />
         </SuspenseWrapper>
       </div>
-      <section className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <section className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 mb-10 lg:mb-3">
         {cards.length === 0 ? (
           <div className="col-span-full">
             <EmptyState title="Brak projektów dla wybranego filtra" subtitle='Zmień kryteria wyszukiwania lub dodaj projekt".' {...(canManage ? { ctaHref: "/projekty", ctaLabel: "Dodaj projekt" } : {})} />
